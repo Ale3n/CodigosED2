@@ -12,21 +12,22 @@ public class Lista2 {
     private int max;
     private int cantElem;
     private int[] elem;
-
-    public Lista2(int max) {
+    
+    public Lista2(int max)
+    {
         this.max = max;
         this.cantElem = 0;
         this.elem = new int[max];
     }
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         String s = "[";
         int i = 0;
-        while(i <cantElem )
+        while(i<cantElem)
         {
             s = s + elem[i];
-            if(i<cantElem-1) s += ",";
+            if(i <cantElem-1) s = s + ",";
             i++;
         }
         return s = s + "]";
@@ -34,7 +35,7 @@ public class Lista2 {
     
     public void insertarIesimo(int x, int i)
     {
-        for(int k = cantElem-1;k <= i;k--)
+        for(int k = cantElem-1; k>=i;k--)
         {
             elem[k +1] = elem[k];
         }
@@ -44,19 +45,19 @@ public class Lista2 {
     
     public void eliminarIesimo(int i)
     {
-        for(int k = i+1; k<cantElem; k++ )
+         for(int k = i +1; k<cantElem;k++)
         {
             elem[k-1] = elem[k];
         }
         cantElem--;
     }
-    public void eliminarTodo(int x)
+    
+    public void eliminarTodos(int x)
     {
         int i = 0;
-        while( i < cantElem)
+        while(i < cantElem)
         {
-            if(elem[i] == x)
-            {
+            if(elem[i]==x){
                 eliminarIesimo(i);
             }else{
                 i++;
@@ -64,32 +65,24 @@ public class Lista2 {
         }
     }
     
-    public void eliminarPrim()
+    public void intertarIesimo2(int x, int i)
     {
-        eliminarIesimo(0);
-    }
-     public void eliminarPrim(int n)
-    {
-        for(int i = 0; i<n && cantElem > 0; i++)
+        for(int k = cantElem-1; k>=i;k--)
         {
-            eliminarPrim();
+            elem[k+1] = elem[k];
         }
+        elem[i] = x;
+        cantElem++;
     }
-     
-    public void eliminarUlt()
+    
+    public void eliminarIesimo2(int i)
     {
-        eliminarIesimo(cantElem-1);
-    }    
-    public void eliminarUlt(int n)
-    {
-        for(int i = 0; i<n && cantElem>0;i++)
+        for(int k = i+1; k<cantElem;k++)
         {
-            eliminarUlt();
+            elem[k-1] = elem[k];
         }
-    }    
-    
-    
-    
+        cantElem--;
+    }
     
     
 }

@@ -8,23 +8,14 @@ package listasenarreglo;
  *
  * @author Tower
  */
-public class ListasEnArreglo {
+public class NewMain {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        ListaPractica l  = new ListaPractica(100);
-        l.insertarIesimo(1, 0);
-        l.insertarIesimo(2, 1);
-        l.insertarIesimo(3, 2);
-        l.insertarIesimo(4, 3);
-        System.out.println(l.toString());
-        l.insertarIesimo(10, 1);
-         System.out.println(l.toString());
-         l.eliminarPrim(2);
-        System.out.println(l.toString());
+        
     }
     
 }
