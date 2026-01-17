@@ -9,18 +9,11 @@ package listasenarreglo;
  * @author Tower
  */
 public class Lista {
-
     private int cantElem;
     private int max;
     private int[] elem;
 
     /* ================= CONSTRUCTORES ================= */
-
-    public Lista() {
-        this.max = 100;
-        this.cantElem = 0;
-        this.elem = new int[max];
-    }
 
     public Lista(int max) {
         this.max = max;
@@ -166,7 +159,7 @@ public class Lista {
     /* ================= ELIMINAR POR CANTIDAD ================= */
 
     // 15
-    public void eliminarPrim(int n) {
+    public void eliminarPrim(int n) {//Método que eliminar los primeros n-elementos de la lista L1.
         for (int i = 0; i < n && cantElem > 0; i++) {
             eliminarPrim();
         }
@@ -179,7 +172,7 @@ public class Lista {
         }
     }
 
-    // 17
+    // 17 Método que elimina los n-elementos de la lista L1, desde la posición i.
     public void eliminarIesimo(int i, int n) {
         for (int k = 0; k < n && i < cantElem; k++) {
             eliminarIesimo(i);
@@ -207,110 +200,138 @@ public class Lista {
 
     // 20
     public void eliminarAlternos() {
-        int i = 1;
+        int i = 1; 
         while (i < cantElem) {
             eliminarIesimo(i);
+            i++; 
         }
     }
     
     
-    // 1. Insertar en orden ascendente
-    public void insertarLugarAsc(int x) {
+    public void insertarLugarAsc(int x)//>< CODIGO 1 NUMNERO 1
+    {
         int k = cantElem - 1;
-        while (k >= 0 && x < elem[k]) {
-            elem[k + 1] = elem[k];
-            k = k - 1;
+        while(k>=0 && x < elem[k])
+        {
+            elem[k+1] = elem[k];
+            k = k-1;
         }
-        elem[k + 1] = x;
-        cantElem++;
+        elem[k+1] = x; cantElem++;
     }
-
-    // 2. Insertar en orden descendente
-    public void insertarLugarDesc(int x) {
+    public void insertarLugarDesc(int x)//>< CODIGO 1 INSERTAR NUMERO 2
+    {
         int k = cantElem - 1;
-        while (k >= 0 && x > elem[k]) {
-            elem[k + 1] = elem[k];
-            k = k - 1;
+        while(k>=0 && x > elem[k])
+        {
+            elem[k+1] = elem[k];
+            k = k-1;
         }
-        elem[k + 1] = x;
-        cantElem++;
+        elem[k+1] = x; cantElem++;
     }
-
-    // 3. Generar N elementos aleatorios ascendentes
-    public void generarAsc(int n, int a, int b) {
+    public void generarAsc(int n, int a,int b) //NUMERO 3
+    {
         int c = 0;
-        while (c < n) {
-            int x = a + (int) (Math.random() * (b - a + 1));
+        while (c < n)
+        {
+            int x = a +(int)(Math.random()*(b-a+1));
             insertarLugarAsc(x);
             c++;
         }
     }
-
-    // 4. Generar N elementos aleatorios descendentes
-    public void generarDesc(int n, int a, int b) {
-        int c = 0;
-        while (c < n) {
-            int x = a + (int) (Math.random() * (b - a + 1));
+    public void generarDesc(int n,int a ,int b)//4
+    {
+        int c =0;
+        while(c<n){
+            int x = a +(int)(Math.random()*(b-a+1));
             insertarLugarDesc(x);
             c++;
         }
     }
-
-    // 5. Insertar al principio
-    /*public void insertarPrim(int x) {
-        for (int i = cantElem; i > 0; i--) {
-            elem[i] = elem[i - 1];
-        }
-        elem[0] = x;
-        cantElem++;
+     public boolean mismoElem(Lista L1)//5
+    {
+        return this.estanTodos(L1)&& L1.estanTodos(this);
     }
-
-    // 6. Insertar al final
-    public void insertarUlt(int x) {
-        elem[cantElem] = x;
-        cantElem++;
-    }*/
-
-    // 7. Cargar desde un entero (dígito por dígito)
-    public void cargar(int n) {
-        while (n > 0) {
-            int d = n % 10;
-            insertarPrim(d);
-            n = n / 10;
-        }
-    }
-
-    // 8. Elementos comunes entre L2 y L3
-    public void comunes(Lista L2, Lista L3) {
+    public boolean estanTodos(Lista L1)
+    {
         int i = 0;
-        while (i < L2.cantElem) {
+        while(i<L1.cantElem)
+        {
+            if (!this.seEncuentra(L1.elem[i]))
+                return false;
+            i = i+1;
+        }
+        return true;
+    }
+    public boolean seEncuentra(int x) {
+    for (int i = 0; i < this.cantElem; i++) {
+        if (this.elem[i] == x) {
+            return true;
+        }
+    }
+    return false;
+    }
+    
+    public void generarAleatorios(int n,int a ,int b)//6
+    {
+        int c =0;
+        while(c<n){
+            int x = a +(int)(Math.random()*(b-a+1));
+            insertarUlt(x);
+            c++;
+        }
+    }
+    public void generarDiferentes(int n,int a ,int b)//7
+    {
+        int c =0;
+        while(c<n){
+            int x = a +(int)(Math.random()*(b-a+1));
+            if(frecuencia(x) == 0)
+            {
+                insertarUlt(x);
+                c++;
+            }
+        }
+    }
+    public void pasarDigitos(int n)//8
+    {
+        while(n>0){
+           int d = n % 10;
+           insertarPrim(d);
+           n = n/10;
+        }
+    }
+    public void comunes(Lista L2, Lista L3)//9
+    {
+        int i = 0;
+        while(i<L2.cantElem ){
             if (L3.frecuencia(L2.elem[i]) > 0 && frecuencia(L2.elem[i]) == 0) {
-                insertarUlt(L2.elem[i]);
+            insertarUlt(L2.elem[i]);
             }
-            i++;
+        i++;
         }
     }
-
-    // 9. Intercalar elementos de dos listas
-    public void intercalar(Lista L1, Lista L2) {
-        int i = 0, j = 0;
-        while (i < L1.cantElem || j < L2.cantElem) {
-            if (i < L1.cantElem) {
-                insertarUlt(L1.elem[i]);
-                i++;
-            }
-            if (j < L2.cantElem) {
-                insertarUlt(L2.elem[j]);
-                j++;
-            }
-        }
+    
+    
+    public void intercalar(Lista L1, Lista L2)//>< CODIGO 2 10
+    {
+         int i = 0, j=0;
+       while(i<L1.cantElem || j < L2.cantElem )
+       {
+           if(i<L1.cantElem)
+           {
+               this.insertarUlt(L1.elem[i]);
+               i++;
+           }
+           if(j<L2.cantElem){
+               this.insertarUlt(L2.elem[j]);
+               j++;
+           }
+       }
     }
-
-    // 10. Verificar si está ordenado
-    public boolean ordenado() {
-        if (cantElem <= 1) return true;
-        boolean asc = true;
-        boolean desc = true;
+    
+    
+    public boolean ordenado() {//11
+        boolean asc = true, desc = true;
         int i = 0;
         while (i < cantElem - 1) {
             if (elem[i] > elem[i + 1]) asc = false;
@@ -319,9 +340,8 @@ public class Lista {
         }
         return asc || desc;
     }
-
-    // 11. Verificar si todos los elementos son iguales
-    public boolean iguales() {
+    
+    public boolean iguales() {//12
         int i = 1;
         while (i < cantElem) {
             if (elem[i] != elem[0])
@@ -330,9 +350,7 @@ public class Lista {
         }
         return true;
     }
-
-    // 12. Verificar si todos los elementos son diferentes
-    public boolean diferentes() {
+    public boolean diferentes() {//13
         int i = 0;
         while (i < cantElem) {
             if (frecuencia(elem[i]) > 1)
@@ -341,63 +359,56 @@ public class Lista {
         }
         return true;
     }
-
-    // 13. Calcular frecuencia de un elemento
-    public int frecuencia(int x) {
-        int c = 0, i = 0;
-        while (i < cantElem) {
-            if (elem[i] == x)
-                c++;
-            i++;
-        }
-        return c;
+    
+    public int frecuencia(int x)//14
+    {
+         int c = 0, i = 0;
+         while(i <cantElem)
+         {
+             if(elem[i]==x)c++;
+             i++;
+         }
+         return c;
     }
-
-    // 14. Promedio de los elementos
-    public double promedio() {
-        if (cantElem == 0) return 0;
-        double s = 0;
-        int i = 0;
+     
+    public boolean mismaFrec() {//15
+        int f = frecuencia(elem[0]);
+        int i = 1;
         while (i < cantElem) {
-            s += elem[i];
-            i++;
-        }
-        return s / cantElem;
-    }
-
-    // 15. Buscar posición de un elemento
-    public int buscar(int x) {
-        int i = 0;
-        while (i < cantElem) {
-            if (elem[i] == x)
-                return i;
-            i++;
-        }
-        return -1;
-    }
-
-    // 16. Verificar si son consecutivos
-    public boolean consecutivos() {
-        int i = 0;
-        while (i < cantElem - 1) {
-            if (elem[i + 1] != elem[i] + 1)
+            if (frecuencia(elem[i]) != f)
                 return false;
             i++;
         }
         return true;
     }
-
-    // 17. Cantidad de elementos mayores al promedio
-    public int mayoresAlPromedio() {
-        double p = promedio();
-        int c = 0;
+    public boolean existeFrec(int n) {//16
         int i = 0;
         while (i < cantElem) {
-            if (elem[i] > p)
-                c++;
+            if (frecuencia(elem[i]) == n)
+                return true;
             i++;
         }
-        return c;
+        return false;
+
     }
+    public boolean poker() {//17
+        int i = 0;
+        while (i < cantElem) {
+            if (frecuencia(elem[i]) == cantElem - 1)
+                return true;
+            i++;
+        }
+        return false;
+    }
+    public boolean palindrome() {//18
+        int i = 0;
+        while (i < cantElem / 2) {
+            if (elem[i] != elem[cantElem - 1 - i])
+                return false;
+            i++;
+        }
+        return true;
+    }  
+   
 }
 
